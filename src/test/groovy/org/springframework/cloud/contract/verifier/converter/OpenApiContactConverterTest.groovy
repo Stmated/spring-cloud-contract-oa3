@@ -31,11 +31,11 @@ class OpenApiContactConverterTest extends Specification {
     URL matcherUrlOA3 = OpenApiContactConverterTest.getResource("/openapi/contract_matchers.yml")
     File matcherFileOA3 = new File(matcherUrlOA3.toURI())
 
-    OpenApiContractConverter contactConverter
+    OpenContractConverter contractConverter
     YamlContractConverter yamlContractConverter
 
     void setup() {
-        contactConverter = new OpenApiContractConverter()
+        contractConverter = new OpenContractConverter()
         yamlContractConverter = new YamlContractConverter()
     }
 
@@ -44,7 +44,7 @@ class OpenApiContactConverterTest extends Specification {
         File file = new File('src/test/resources/openapi/openapi_petstore.yml')
         when:
 
-        def result = contactConverter.isAccepted(file)
+        def result = contractConverter.isAccepted(file)
 
         then:
         result
@@ -55,7 +55,7 @@ class OpenApiContactConverterTest extends Specification {
         File file = new File('src/test/resources/openapi/openapi.yml')
         when:
 
-        def result = contactConverter.isAccepted(file)
+        def result = contractConverter.isAccepted(file)
 
         then:
         result
@@ -66,7 +66,7 @@ class OpenApiContactConverterTest extends Specification {
         File file = new File('foo')
         when:
 
-        def result = contactConverter.isAccepted(file)
+        def result = contractConverter.isAccepted(file)
 
         then:
         !result
@@ -78,7 +78,7 @@ class OpenApiContactConverterTest extends Specification {
         File file = new File('src/test/resources/openapi/openapi.yml')
         when:
 
-        def result = contactConverter.convertFrom(file)
+        def result = contractConverter.convertFrom(file)
 
         println result
 
@@ -90,7 +90,7 @@ class OpenApiContactConverterTest extends Specification {
     def "Test Yaml Contract"() {
         given:
         Contract yamlContract = yamlContractConverter.convertFrom(contractFile).first()
-        Collection<Contract> oa3Contract = contactConverter.convertFrom(contractOA3File)
+        Collection<Contract> oa3Contract = contractConverter.convertFrom(contractOA3File)
 
         when:
 
@@ -108,13 +108,14 @@ class OpenApiContactConverterTest extends Specification {
         yamlContract.response.headers == openApiContract.response.headers
         yamlContract.response.bodyMatchers == openApiContract.response.bodyMatchers
         yamlContract.response.body == openApiContract.response.body
+        yamlContract.request.multipart == openApiContract.request.multipart
         yamlContract == openApiContract
 
     }
 
     def "test OA3 Fraud Yml"() {
         given:
-        Collection<Contract> oa3Contract = contactConverter.convertFrom(fraudApiFile)
+        Collection<Contract> oa3Contract = contractConverter.convertFrom(fraudApiFile)
 
         when:
         Contract contract = oa3Contract.getAt(0)
@@ -127,7 +128,7 @@ class OpenApiContactConverterTest extends Specification {
 
     def "Test parse of test path"() {
         given:
-        Collection<Contract> oa3Contract = contactConverter.convertFrom(contractOA3FilePath)
+        Collection<Contract> oa3Contract = contractConverter.convertFrom(contractOA3FilePath)
 
         when:
         Contract contract = oa3Contract.getAt(0)
@@ -140,7 +141,7 @@ class OpenApiContactConverterTest extends Specification {
     def "Test Parse of Payor example contracts"() {
 
         given:
-        Collection<Contract> oa3Contract = contactConverter.convertFrom(payorApiFile)
+        Collection<Contract> oa3Contract = contractConverter.convertFrom(payorApiFile)
 
         when:
         Contract contract = oa3Contract.getAt(0)
@@ -152,7 +153,7 @@ class OpenApiContactConverterTest extends Specification {
     def "Test Parse of Velo Contracts"() {
 
         given:
-        Collection<Contract> veloContracts = contactConverter.convertFrom(veloApiFile)
+        Collection<Contract> veloContracts = contractConverter.convertFrom(veloApiFile)
 
         when:
         //Contract contract = oa3Contract.getAt(0)
@@ -160,14 +161,14 @@ class OpenApiContactConverterTest extends Specification {
 
         then:
         //contract
-        contactConverter.isAccepted(veloApiFile)
+        contractConverter.isAccepted(veloApiFile)
     }
 
     def "Test Parse of Matchers"() {
 
         given:
         Contract yamlContract = yamlContractConverter.convertFrom(matcherFile).first()
-        Collection<Contract> matcherContracts = contactConverter.convertFrom(matcherFileOA3)
+        Collection<Contract> matcherContracts = contractConverter.convertFrom(matcherFileOA3)
 
         when:
 
@@ -175,7 +176,7 @@ class OpenApiContactConverterTest extends Specification {
 
         then:
         //contract
-        contactConverter.isAccepted(matcherFileOA3)
+        contractConverter.isAccepted(matcherFileOA3)
        // yamlContract.request.url == openApiContract.request.url
         yamlContract.request.method == openApiContract.request.method
         yamlContract.request.cookies == openApiContract.request.cookies

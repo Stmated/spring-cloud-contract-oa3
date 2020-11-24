@@ -11,14 +11,14 @@ class ServiceNameTest extends Specification {
     URL petstoreUrl = OpenApiContactConverterTest.getResource("/openapi/openapi_petstore.yml")
     File petstoreFile = new File(petstoreUrl.toURI())
 
-    OpenApiContractConverter contactConverter
+    OpenContractConverter contactConverter
 
     void setup() {
-        contactConverter = new OpenApiContractConverter()
+        contactConverter = new OpenContractConverter()
     }
 
     void cleanup() {
-        System.properties.remove(OpenApiContractConverter.SERVICE_NAME_KEY)
+        System.properties.remove(OpenContractConverter.SERVICE_NAME_KEY)
     }
 
     def "Test Contract Not Set"(){
@@ -39,7 +39,7 @@ class ServiceNameTest extends Specification {
 
     def "Test Contract Set, Should Match one value"() {
         given:
-        System.properties.setProperty(OpenApiContractConverter.SERVICE_NAME_KEY, "ServiceA")
+        System.properties.setProperty(OpenContractConverter.SERVICE_NAME_KEY, "ServiceA")
 
         when:
         def enabled = contactConverter.checkServiceEnabled("ServiceA")
@@ -50,7 +50,7 @@ class ServiceNameTest extends Specification {
 
     def "Test Contract Set, Should NOT Match one value"() {
         given:
-        System.properties.setProperty(OpenApiContractConverter.SERVICE_NAME_KEY, "ServiceA")
+        System.properties.setProperty(OpenContractConverter.SERVICE_NAME_KEY, "ServiceA")
 
         when:
         def enabled = contactConverter.checkServiceEnabled("ServiceB")
@@ -61,7 +61,7 @@ class ServiceNameTest extends Specification {
 
     def "Test Contract Set, Should Match List of Values"() {
         given:
-        System.properties.setProperty(OpenApiContractConverter.SERVICE_NAME_KEY, "ServiceA,ServiceB")
+        System.properties.setProperty(OpenContractConverter.SERVICE_NAME_KEY, "ServiceA,ServiceB")
 
         when:
         def enabled = contactConverter.checkServiceEnabled("ServiceB")
@@ -72,7 +72,7 @@ class ServiceNameTest extends Specification {
 
     def "Test Contract Set, Should Match List of Values with spaces"() {
         given:
-        System.properties.setProperty(OpenApiContractConverter.SERVICE_NAME_KEY, "ServiceA,  ServiceB")
+        System.properties.setProperty(OpenContractConverter.SERVICE_NAME_KEY, "ServiceA,  ServiceB")
 
         when:
         def enabled = contactConverter.checkServiceEnabled("ServiceB")
@@ -92,7 +92,7 @@ class ServiceNameTest extends Specification {
 
     def "test Service A"() {
         given:
-        System.properties.setProperty(OpenApiContractConverter.SERVICE_NAME_KEY, "serviceA")
+        System.properties.setProperty(OpenContractConverter.SERVICE_NAME_KEY, "serviceA")
 
         when:
         def contracts = contactConverter.convertFrom(petstoreFile)
@@ -104,7 +104,7 @@ class ServiceNameTest extends Specification {
 
     def "test Service A and B"() {
         given:
-        System.properties.setProperty(OpenApiContractConverter.SERVICE_NAME_KEY, "serviceA, serviceB")
+        System.properties.setProperty(OpenContractConverter.SERVICE_NAME_KEY, "serviceA, serviceB")
 
         when:
         def contracts = contactConverter.convertFrom(petstoreFile)
@@ -116,7 +116,7 @@ class ServiceNameTest extends Specification {
 
     def "test Service A and C"() {
         given:
-        System.properties.setProperty(OpenApiContractConverter.SERVICE_NAME_KEY, "serviceA, serviceC")
+        System.properties.setProperty(OpenContractConverter.SERVICE_NAME_KEY, "serviceA, serviceC")
 
         when:
         def contracts = contactConverter.convertFrom(petstoreFile)
@@ -128,7 +128,7 @@ class ServiceNameTest extends Specification {
 
     def "test Service A, B and C"() {
         given:
-        System.properties.setProperty(OpenApiContractConverter.SERVICE_NAME_KEY, "serviceA,serviceB, serviceC")
+        System.properties.setProperty(OpenContractConverter.SERVICE_NAME_KEY, "serviceA,serviceB, serviceC")
 
         when:
         def contracts = contactConverter.convertFrom(petstoreFile)
