@@ -95,12 +95,6 @@
                 <version>3.0.2</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.github.tomakehurst</groupId>
-                <artifactId>wiremock-jre8-standalone</artifactId>
-                <version>2.27.2</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -120,6 +114,19 @@
             <artifactId>commons-io</artifactId>
         </dependency>
 
+        <!-- Used for reading a GraphQL file and converting to Cloud Contracts -->
+        <dependency>
+          <groupId>com.graphql-java</groupId>
+          <artifactId>graphql-java</artifactId>
+          <version>16.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphql-java-tools</artifactId>
+            <version>5.2.4</version>
+        </dependency>
+
         <dependency>
             <groupId>io.swagger.parser.v3</groupId>
             <artifactId>swagger-parser</artifactId>
@@ -130,14 +137,6 @@
             <version>${spock-spring.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- Remove? Probably not compatible with newer Spock -->
-<!--        <dependency>-->
-<!--            <groupId>info.solidsoft.spock</groupId>-->
-<!--            <artifactId>spock-global-unroll</artifactId>-->
-<!--            <version>${spock-global-unroll.version}</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
     </dependencies>
 
     <prerequisites>

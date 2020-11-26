@@ -1,2 +1,4 @@
 org.springframework.cloud.contract.spec.ContractConverter=\
-org.springframework.cloud.contract.verifier.converter.OpenContractConverter
+org.springframework.cloud.contract.verifier.converter.OpenContractConverter,\
+org.springframework.cloud.contract.verifier.converter.AsyncApiContractConverter,\
+org.springframework.cloud.contract.verifier.converter.GraphQLContractConverter

@@ -1,0 +1,17 @@
+graphql: 1.0
+info:
+  version: 1.0.0
+  title: SCC
+
+queries:
+  getBooks:
+    x-contracts:
+      - contractId: 1
+        request:
+          body:
+            input:
+              title: "A"
+        response:
+          body:
+            items:
+              - title: "A Book"

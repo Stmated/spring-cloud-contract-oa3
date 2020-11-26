@@ -1,0 +1,56 @@
+schema {
+
+    query: Queries
+
+    mutation: Mutations
+}
+
+type Queries {
+
+    getBooks(
+        "This is a description about the filter"
+        filter: BookFilter
+    ): GetBooksResponse
+}
+
+type Mutations {
+
+    setBookTitle(input: SetBookTitleInput): SetBookTitleResponse
+}
+
+input Contract {
+    id: String
+    request: Request
+    response: Response
+}
+
+input Request {
+    body: String
+}
+
+input Response {
+    body: String
+}
+
+input SetBookTitleInput {
+    filter: BookFilter!
+    title: String
+}
+
+type SetBookTitleResponse {
+    success: Boolean!
+}
+
+input BookFilter {
+
+    title: String
+}
+
+type GetBooksResponse {
+
+    items: [Book!]!
+}
+
+type Book {
+    title: String
+}

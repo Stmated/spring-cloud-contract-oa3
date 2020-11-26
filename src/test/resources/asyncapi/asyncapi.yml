@@ -64,10 +64,12 @@ channels:
         payload:
           $ref: '#/components/schemas/GreetingPayload'
         x-contracts:
-          - contractId: 3
+          - contractId: 1
+            triggeredBy: saidHelloToA()
             body:
               phrase: "Hello, A"
-          - contractId: 4
+          - contractId: 2
+            triggeredBy: saidHelloToB()
             body:
               phrase: "Hello, B"
 
